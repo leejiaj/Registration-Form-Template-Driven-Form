@@ -1,0 +1,199 @@
+<div class="container" [hidden]="submitted">
+    <h1>Registration Form</h1>
+    <form #registerForm="ngForm" (ngSubmit)="newRegister();">
+      <!-- {{diagnostic}} -->
+      <div class="form-group">
+        <label for="firstname">First Name</label>
+        <input type="text" class="form-control" id="firstname" required
+        [(ngModel)]="personmodel.firstname" name="firstname" #spy #firstname="ngModel">
+      </div>
+
+      <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)"
+            class="alert alert-danger">
+
+        <div *ngIf="firstname.errors.required">
+          First Name is required
+        </div>
+
+      </div>
+  
+      <!-- <div [hidden]="firstname.valid || firstname.pristine" class="alert alert-danger">
+        First Name is required
+      </div> -->
+
+      <div class="form-group">
+        <label for="lastname">Last Name</label>
+        <input type="text" class="form-control" id="lastname" required
+        [(ngModel)]="personmodel.lastname" name="lastname" #spy #lastname="ngModel">
+      </div>
+
+      <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)"
+            class="alert alert-danger">
+
+        <div *ngIf="lastname.errors.required">
+          Last Name is required
+        </div>
+
+      </div>
+
+      <!-- <div [hidden]="lastname.valid || lastname.pristine" class="alert alert-danger">
+        Last Name is required
+      </div> -->
+
+
+      <div class="form-group">
+        <label for="emailaddress">Email Address</label>
+        <input type="email" class="form-control" id="emailaddress" placeholder="sophie@example.com" required
+        [(ngModel)]="personmodel.emailaddress" name="emailaddress" email #spy #emailaddress="ngModel">
+      </div>
+
+      <div *ngIf="emailaddress.invalid && (emailaddress.dirty || emailaddress.touched)"
+            class="alert alert-danger">
+
+        <div *ngIf="emailaddress.errors.required">
+          Email Address is required
+        </div>  
+
+        <div *ngIf="emailaddress.errors?.email"> 
+          Email Address is invalid
+        </div> 
+
+      </div>
+
+      <!-- <div [hidden]="emailaddress.valid || emailaddress.pristine" class="alert alert-danger">
+        Email Address is required
+      </div> -->
+
+      <div class="form-group">
+        <label for="phonenumber">Phone Number</label>
+        <input type="text" class="form-control" id="phonenumber" minlength="10" maxlength="10" 
+        required pattern="[0-9]*"
+        [(ngModel)]="personmodel.phonenumber" name="phonenumber" #spy #phonenumber="ngModel">
+      </div>
+
+      <div *ngIf="phonenumber.invalid && (phonenumber.dirty || phonenumber.touched)"
+            class="alert alert-danger">
+
+        <div *ngIf="phonenumber.errors.required">
+          Phone Number is required
+        </div>
+
+        <div *ngIf="phonenumber.errors.minlength">
+            Phone Number must be 10 digits
+        </div>
+
+        <div *ngIf="phonenumber.errors.pattern">
+          Phone Number should be only numbers
+        </div>
+
+      </div>
+
+      <!-- <div [hidden]="phonenumber.valid || phonenumber.pristine"  class="alert alert-danger">
+        Phone Number is required
+      </div> -->
+
+      <!-- <div *ngIf="phonenumber.errors.minlength" class="alert alert-danger">
+        Phone Number should be 10 digits
+      </div> -->
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" required [pattern]="pwdPattern"
+        [(ngModel)]="personmodel.password" name="password" #spy #password="ngModel">
+      </div>
+
+      <div *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="alert alert-danger">
+
+        <div *ngIf="password.errors.required">
+          Password is required
+        </div>
+
+        <div *ngIf="password.errors.pattern"> 
+          Password should contain one uppercase letter, one lowercase letter and one number 
+          <br>Password should be 8 to 12 characters in length
+        </div>
+
+      </div>
+  
+      <!-- <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+        Password is required
+      </div> -->
+
+
+      <div class="form-group">
+        <label for="confirmpassword">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmpassword" required
+        [(ngModel)]="confirmpass" name="confirmpassword" #spy #confirmpassword="ngModel">
+      </div>
+
+      <div *ngIf="confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched)"
+            class="alert alert-danger">
+
+        <div *ngIf="confirmpassword.errors.required">
+          Confirm Password is required
+        </div>
+
+      </div>
+
+      <div *ngIf="(confirmpassword.dirty || confirmpassword.touched) && (personmodel.password != confirmpass)"
+            class="alert alert-danger">
+        Password and Confirm Password should be equal
+      </div>
+
+      <!-- <div [hidden]="confirmpassword.valid || confirmpassword.pristine" class="alert alert-danger">
+        Confirm Password is required
+      </div> -->
+
+      <re-captcha (resolved)="resolved($event)"></re-captcha>
+
+      <!-- show captcha html
+      <botdetect-captcha styleName="angularBasicCaptcha"></botdetect-captcha> 
+
+      <label>
+        <span>Retype the characters from the picture:</span>
+        <input
+          type="text" id="captchaCode" name="captchaCode" ngModel #captchaCode="ngModel" correctCaptcha>
+      </label>
+    
+      <div class="alert alert-danger" *ngIf="captchaCode.errors?.incorrectCaptcha && !captchaCode.pristine">
+        Incorrect code.
+      </div>
+         -->
+      <button class="btn btn-success" type="submit">
+        Register
+      </button>
+
+      <!-- <button class="btn btn-success" type="submit" [disabled]="!registerForm.form.valid || (personmodel.password != confirmpass) ">
+        Register
+      </button> -->
+  
+  
+    </form>
+  </div>
+  
+  <div [hidden]="!submitted">
+      <h2>You submitted the following:</h2>
+      <div class="row">
+        <div class="col-xs-3">First Name</div>
+        <div class="col-xs-9  pull-left">{{ personmodel.firstname }}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-3">Last Name</div>
+        <div class="col-xs-9  pull-left">{{ personmodel.lastname }}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-3">Email Address</div>
+        <div class="col-xs-9  pull-left">{{ personmodel.emailaddress }}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-3">Phone Number</div>
+        <div class="col-xs-9  pull-left">{{ personmodel.phonenumber }}</div>
+      </div>
+      
+      <br>
+      <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+    </div>
