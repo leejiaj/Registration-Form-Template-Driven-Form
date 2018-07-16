@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.1.
 
-This project creates a Registration Form using Angular 6 (Template-driven form to be specific). Reference: https://angular.io/guide/forms. 
+This project creates a Registration Form using Angular 6 (Template-driven form). Reference: https://angular.io/guide/forms. 
 
 Through this project, learned how to:
 Build an Angular form with a component and template.
